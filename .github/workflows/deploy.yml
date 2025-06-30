@@ -34,7 +34,7 @@ jobs:
 
       - name: Deploy frontend to VPS
         run: |
-           scp -o StrictHostKeyChecking=no -r client/dist/* ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/var/www/parrotConsult/client
+           scp -o StrictHostKeyChecking=no -r client/dist/* ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/var/www/parrotConsult/client/dist
 
       - name: Deploy backend and fix permissions
         run: |
