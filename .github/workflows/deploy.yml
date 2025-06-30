@@ -3,7 +3,7 @@ name: Deploy MERN App to Hostinger VPS
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -40,7 +40,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
             cd /var/www/parrotConsult/server
-            git pull origin main
+            git pull origin master
             npm install
 
             # Restart backend via PM2
