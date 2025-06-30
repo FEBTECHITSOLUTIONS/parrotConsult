@@ -34,7 +34,7 @@ jobs:
 
       - name: Deploy frontend to VPS
         run: |
-          scp -r client/build/* ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/var/www/parrotConsult/client/dist
+          scp -r client/build/* ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/var/www/parrotConsult/client/
 
       - name: Deploy backend and fix permissions
         run: |
