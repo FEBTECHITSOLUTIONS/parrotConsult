@@ -124,7 +124,7 @@ export default function ConsultantDetailView({}) {
       <div className="flex flex-wrap justify-center md:justify-start gap-4">
         <div className="bg-white px-4 py-2 rounded-lg shadow text-center w-28">
           <div className="text-xl sm:text-2xl font-bold text-teal-800">
-            ₹{hourlyRate || "4"}
+            ₹<s>{hourlyRate || "4"}</s> FREE
           </div>
           <div className="text-sm text-gray-600">per hour</div>
         </div>
