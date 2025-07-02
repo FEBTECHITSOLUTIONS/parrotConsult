@@ -21,6 +21,8 @@ import ConsultantDashboard from '../pages/ConsultantDashboard';
 import LoginSignupModal from '../forms/loginSignup';
 import MeetingRoom from '../videoroom/meeting';
 import ConsultantApplicationForm from '../forms/ConsultantApplicationform';
+import ConsultantSignupForm from '../forms/ConsultantSignupForm';
+import AuthModal from '../forms/AuthModal';
 
 const routes = createBrowserRouter([
   {
@@ -37,6 +39,7 @@ const routes = createBrowserRouter([
       { path: 'consultant/profile', element: <ConsultantProfile /> },
       { path: 'application-form', element: <ConsultantApplicationForm /> },
       { path: 'ViewAllConsultants', element: <ViewAllConsultants /> },
+      { path: 'AuthModal', element: <AuthModal /> },
     ]
   },
   {
@@ -67,6 +70,7 @@ const routes = createBrowserRouter([
       { path: 'login&signup', element: <LoginSignupModal /> },
       { path: '/meeting/:bookingId', element: <MeetingRoom /> },
       { path: '/consultantApplicationForm', element: <ConsultantApplicationForm /> },
+      { path: '/ConsultantSignupForm', element: <ConsultantSignupForm /> },
 
 ]);
 
