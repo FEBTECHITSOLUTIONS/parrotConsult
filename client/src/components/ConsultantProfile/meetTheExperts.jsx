@@ -208,14 +208,7 @@ const [getStarted , setGetStarted] = useState(false)
 <BookingPage 
   isOpen={getStarted}
   onClose={() => setGetStarted(false)}
-  consultant={{
-    name: "Nandani kalra",
-    about: "Expert business consultant...",
-    weeklyAvailability: {
-      Monday: [{ start: "17:06", end: "20:06", _id: "..." }],
-      // ... other days
-    }
-  }}
+  consultant={selectedConsultant}
 />
       {/* <ConsultantBookingForm
         isOpen={isBookingOpen}
