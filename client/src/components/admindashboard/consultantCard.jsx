@@ -110,20 +110,27 @@ const ConsultantCard = ({ consultant, onApprove, onReject, loading }) => {
                 <DetailItem label="Specialized Services" value={consultant.specializedServices?.join(', ')} />
                 <DetailItem label="Key Skills" value={consultant.keySkills?.join(', ')} />
                 <DetailItem label="Languages" value={consultant.languageProficiency?.join(', ')} />
-                <DetailItem
+<DetailItem
   label="Weekly Availability"
   value={
-    consultant.weeklyAvailability?.map(({ day, isActive, timeSlots }) => {
-      if (!isActive || !timeSlots?.length) return `${day}: Not available`;
+    Array.isArray(consultant.weeklyAvailability)
+      ? consultant.weeklyAvailability
+          .map(({ day, isActive, timeSlots }) => {
+            if (!isActive || !Array.isArray(timeSlots) || timeSlots.length === 0) {
+              return `${day}: Not available`;
+            }
 
-      const slots = timeSlots
-        .map(({ start, end }) => `${start} - ${end}`)
-        .join(', ');
+            const slots = timeSlots
+              .map(({ start, end }) => `${start} - ${end}`)
+              .join(', ');
 
-      return `${day}: ${slots}`;
-    }).join(' | ') || 'Not available'
+            return `${day}: ${slots}`;
+          })
+          .join(' | ')
+      : 'Not available'
   }
 />
+
 
                 {/* <DetailItem label="Weekly Availability" value={consultant.weeklyAvailability?.join(', ')} /> */}
                 {/* <DetailItem label="Availability/Week" value={consultant.availabilityPerWeek} /> */}
