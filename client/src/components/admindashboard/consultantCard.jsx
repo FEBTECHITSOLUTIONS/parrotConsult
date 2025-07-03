@@ -737,7 +737,8 @@ const ConsultantCard = ({
                 <DetailItem label="Specialized Services" value={consultant.specializedServices?.join(', ')} />
                 <DetailItem label="Key Skills" value={consultant.keySkills?.join(', ')} />
                 <DetailItem label="Languages" value={consultant.languageProficiency?.join(', ')} />
-               <DetailItem
+
+<DetailItem
   label="Weekly Availability"
   value={
     Array.isArray(consultant.weeklyAvailability)
@@ -757,6 +758,7 @@ const ConsultantCard = ({
       : 'Not available'
   }
 />
+
 
                 {/* <DetailItem label="Weekly Availability" value={consultant.weeklyAvailability?.join(', ')} /> */}
                 {/* <DetailItem label="Availability/Week" value={consultant.availabilityPerWeek} /> */}
