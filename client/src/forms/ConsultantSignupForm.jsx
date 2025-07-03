@@ -183,7 +183,7 @@ const onSubmit = async (data) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:8010/api/v1/consultant/registerasconsultant",
+      "http://api.parrotconsult.com/api/v1/consultant/registerasconsultant",
       formData,
       {
         headers: {
