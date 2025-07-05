@@ -156,8 +156,9 @@ const AdminDashboard = () => {
   };
 
   const renderActiveTab = () => {
-    switch (activeTab) {
+    switch (activeTab) { 
       case "consultants":
+        case "rejected":
         return (
           <ConsultantsManagement
             consultants={consultants}
@@ -165,6 +166,7 @@ const AdminDashboard = () => {
             onReject={handleReject}
             loading={loading}
             onRefresh={fetchConsultants}
+            activeTab={activeTab}
           />
         );
 

@@ -13,6 +13,7 @@ export const ConsultantsManagement = ({
   onReject,
   loading,
   onRefresh,
+  activeTab
 }) => {
   const [openCardId, setOpenCardId] = useState(null);
 
@@ -81,21 +82,30 @@ export const ConsultantsManagement = ({
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4">
-            {consultants.map((consultant) => (
-              <ConsultantCard
-                key={consultant._id}
-                consultant={consultant}
-                onApprove={onApprove}
-                onReject={onReject}
-                loading={loading}
-                isOpen={openCardId === consultant._id}
-                onToggle={() =>
-                  setOpenCardId(
-                    openCardId === consultant._id ? null : consultant._id
-                  )
-                }
-              />
-            ))}
+           {consultants
+  .filter((consultant) =>
+    activeTab === 'consultants'
+      ? consultant.status === 'pending'
+      : activeTab === 'rejected'
+      ? consultant.status === 'rejected'
+      : false
+  )
+  .map((consultant) => (
+    <ConsultantCard
+      key={consultant._id}
+      consultant={consultant}
+      onApprove={onApprove}
+      onReject={onReject}
+      loading={loading}
+      isOpen={openCardId === consultant._id}
+      onToggle={() =>
+        setOpenCardId(
+          openCardId === consultant._id ? null : consultant._id
+        )
+      }
+    />
+))}
+
           </div>
         )}
       </div>

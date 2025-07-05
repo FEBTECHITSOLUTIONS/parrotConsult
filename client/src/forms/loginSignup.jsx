@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { registerAsUser, loginAsUser } from "../service/userApi";
 import { loginAsConsultant } from "../service/consultantApi";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Home } from 'lucide-react';
+import { Eye, EyeOff, Home } from "lucide-react";
 import { showSuccessToast } from "../util/Notification";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const LoginSignupModal = () => {
   const navigate = useNavigate();
   const [authMode, setAuthMode] = useState("login");
@@ -20,7 +20,7 @@ const LoginSignupModal = () => {
   });
 
   const handleInputChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -60,12 +60,17 @@ const LoginSignupModal = () => {
         const response = await loginFn(formData);
 
         // Clear old roles
-        ["user", "consultant", "admin"].forEach(r => localStorage.removeItem(r));
+        ["user", "consultant", "admin"].forEach((r) =>
+          localStorage.removeItem(r)
+        );
 
         if (authMode === "consultantLogin") {
           const consultantData = response.data;
           if (!consultantData) throw new Error("No consultant data returned.");
           localStorage.setItem("consultant", JSON.stringify(consultantData));
+          console.log("Consultant data aa gya h :", consultantData);
+
+          localStorage.setItem("accessToken", response.data.accessToken);
         } else {
           const userData = response.data?.status;
           const role = userData?.role?.toLowerCase();
@@ -73,12 +78,11 @@ const LoginSignupModal = () => {
           localStorage.setItem(role, JSON.stringify(userData));
         }
 
-       
-        showSuccessToast("Login successful! , redirecting to home page")
+        showSuccessToast("Login successful! , redirecting to home page");
         resetForm();
-       setTimeout(() => {
-         navigate("/");
-       }, 1000);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       }
     } catch (err) {
       console.error(err);
@@ -90,19 +94,21 @@ const LoginSignupModal = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center  px-4">
-          <ToastContainer
-  position="top-right"
-  autoClose={4000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-  
-/>
-      <Link to="/" className="absolute top-5 left-5 flex items-center gap-1 text-green-700 hover:text-green-900">
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Link
+        to="/"
+        className="absolute top-5 left-5 flex items-center gap-1 text-green-700 hover:text-green-900"
+      >
         <Home size={20} /> <span className="font-semibold uppercase">Home</span>
       </Link>
 
@@ -149,7 +155,6 @@ const LoginSignupModal = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {authMode === "signup" && (
               <Input
-                
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
@@ -157,7 +162,6 @@ const LoginSignupModal = () => {
               />
             )}
             <Input
-             
               name="email"
               type="email"
               value={formData.email}
@@ -166,7 +170,6 @@ const LoginSignupModal = () => {
             />
             {authMode === "signup" && (
               <Input
-               
                 name="phoneNumber"
                 type="tel"
                 value={formData.phoneNumber}
@@ -175,7 +178,6 @@ const LoginSignupModal = () => {
               />
             )}
             <div>
-            
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -197,7 +199,6 @@ const LoginSignupModal = () => {
             </div>
             {authMode === "signup" && (
               <Input
-                
                 name="confirmPassword"
                 type="password"
                 value={formData.confirmPassword}
@@ -253,7 +254,14 @@ const LoginSignupModal = () => {
 };
 
 // ✅ Reusable input component
-const Input = ({ label, name, value, onChange, type = "text", placeholder }) => (
+const Input = ({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  placeholder,
+}) => (
   <div>
     <label className="block text-sm font-semibold mb-2">{label}</label>
     <input

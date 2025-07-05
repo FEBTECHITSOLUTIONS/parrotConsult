@@ -29,9 +29,11 @@ export const Sidebar = ({ activeTab, setActiveTab, onLogout }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Shield },
     { id: 'consultants', label: 'Pending Consultants', icon: Users },
+    { id: 'rejected', label: 'Rejected Consultants', icon: XCircle }, // ⬅️ New tab
     { id: 'bookings', label: 'Bookings', icon: Bell },
     { id: 'settings', label: 'Settings', icon: Settings }
   ];
+  
 
   const SidebarContent = () => (
     <>
