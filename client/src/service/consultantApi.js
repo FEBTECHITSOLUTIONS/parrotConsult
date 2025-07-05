@@ -16,3 +16,11 @@ export const registerAsConsultant = (formdata) => {
 
 export const loginAsConsultant = (formdata) =>
   API.post("/consultant/loginconsultant", formdata); // ✅ loginAsConsultant
+
+export const updateConsultantProfile = (data, token) => {
+  return API.put("/consultant/updateProfile", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

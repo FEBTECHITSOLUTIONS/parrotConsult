@@ -15,6 +15,7 @@ import {
 import { loginAsConsultant } from "../service/consultantApi";
 import { getBookingsByConsultantId } from "../service/bookingApi";
 import BookingCard from "./consultantdash/bookingcard";
+import EditConsultantProfile from "../forms/editconsultant";
 
 // Reusable Card Component
 const Card = ({ children, className = "" }) => (
@@ -476,7 +477,7 @@ const ConsultantDashboard = () => {
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {upcomingBookings.map((booking, index) => {
                 console.log("Booking:", booking);
-                
+
                 const dateObj = new Date(booking.datetime);
                 const formattedDate = dateObj.toLocaleDateString();
                 const formattedTime = dateObj.toLocaleTimeString([], {
@@ -508,175 +509,7 @@ const ConsultantDashboard = () => {
               <h1 className="text-4xl font-bold text-gray-900">Edit Profile</h1>
             </div>
             <Card className="p-8">
-              <div className="max-w-4xl">
-                <div className="mb-8 p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl">
-                  <div className="flex items-center gap-6">
-                    <div className="relative">
-                      <img
-                        src={
-                          consultantData?.data.profilePicture ||
-                          "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-                        }
-                        alt={consultantData?.data.name}
-                        className="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-2xl"
-                      />
-                      <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-400 rounded-full border-3 border-white shadow-lg"></div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        Profile Picture
-                      </h3>
-                      <button className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2 rounded-xl font-semibold hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg transform hover:scale-105">
-                        Change Photo
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={consultantData?.data.name || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      defaultValue={consultantData?.data.email || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      defaultValue={consultantData?.data.phoneNumber || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Primary Category
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={consultantData?.data.primaryCategory || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium capitalize"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Experience (Years)
-                    </label>
-                    <input
-                      type="number"
-                      defaultValue={consultantData?.data.experience || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Hourly Rate (₹)
-                    </label>
-                    <input
-                      type="number"
-                      defaultValue={consultantData?.data.hourlyRate || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Address
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={consultantData?.data.address || ""}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                      Availability per Week (Hours)
-                    </label>
-                    <input
-                      type="number"
-                      defaultValue={
-                        consultantData?.data.availabilityPerWeek || ""
-                      }
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 font-medium"
-                    />
-                  </div>
-                </div>
-
-                {/* Skills Section */}
-                <div className="mb-8">
-                  <label className="block text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">
-                    Key Skills
-                  </label>
-                  <div className="flex flex-wrap gap-3 overflow-x-auto">
-                    {consultantData?.data.keySkills?.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 border border-emerald-300 shadow-md"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Languages Section */}
-                <div className="mb-8">
-                  <label className="block text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">
-                    Language Proficiency
-                  </label>
-                  <div className="flex flex-wrap gap-3 overflow-x-auto">
-                    {consultantData?.data.languageProficiency?.map(
-                      (language, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-300 shadow-md capitalize"
-                        >
-                          {language}
-                        </span>
-                      )
-                    )}
-                  </div>
-                </div>
-
-                {/* Services Section */}
-                <div className="mt-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Specialized Services
-                  </label>
-                  <div className="flex flex-wrap gap-2 mb-4 overflow-x-auto">
-                    {consultantData?.data.specializedServices?.map(
-                      (service, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800"
-                        >
-                          {service}
-                        </span>
-                      )
-                    )}
-                  </div>
-                </div>
-
-                <button className="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-2.5 text-sm sm:text-base rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition">
-                  Save Changes
-                </button>
-              </div>
+              <EditConsultantProfile consultantData={consultantData} />
             </Card>
           </div>
         );

@@ -47,28 +47,38 @@ export const ApplyAsconsultant = asyncHandler(async (req, res) => {
   } = req.body;
 
   // ✅ Parse timeSlots from frontend
-  const parsedTimeSlots = JSON.parse(req.body.timeSlots || '{}');
+  const parsedTimeSlots = JSON.parse(req.body.timeSlots || "{}");
   console.log(parsedTimeSlots, "✅ Parsed TimeSlots from frontend");
 
   // ✅ Check if consultant with email already exists
   const existing = await Consultant.findOne({ email });
-  if (existing) return res.status(400).json({ message: "Email already exists" });
+  if (existing)
+    return res.status(400).json({ message: "Email already exists" });
 
   // ✅ Upload profile picture
-  const profilePic = await uploadOnCloudinary(req.files?.profilePicture?.[0]?.path);
+  const profilePic = await uploadOnCloudinary(
+    req.files?.profilePicture?.[0]?.path
+  );
 
   // ✅ Upload resume
   const resumeFile = req.files?.resume?.[0];
-  if (!resumeFile) return res.status(400).json({ message: "Resume file is missing" });
+  if (!resumeFile)
+    return res.status(400).json({ message: "Resume file is missing" });
   const cv = await uploadOnCloudinary(resumeFile.path, "raw");
-  if (!cv?.url) return res.status(400).json({ message: "Failed to upload resume" });
+  if (!cv?.url)
+    return res.status(400).json({ message: "Failed to upload resume" });
 
   // ✅ Upload PAN & Aadhaar
-  if (!req.files?.panCard?.[0]) return res.status(400).json({ message: "PAN Card file is missing" });
-  if (!req.files?.aadhaarCard?.[0]) return res.status(400).json({ message: "Aadhaar Card file is missing" });
+  if (!req.files?.panCard?.[0])
+    return res.status(400).json({ message: "PAN Card file is missing" });
+  if (!req.files?.aadhaarCard?.[0])
+    return res.status(400).json({ message: "Aadhaar Card file is missing" });
 
   const docs = {
-    aadhaarCard: await uploadOnCloudinary(req.files?.aadhaarCard?.[0]?.path, "raw"),
+    aadhaarCard: await uploadOnCloudinary(
+      req.files?.aadhaarCard?.[0]?.path,
+      "raw"
+    ),
     panCard: await uploadOnCloudinary(req.files?.panCard?.[0]?.path, "raw"),
     passport: req.files?.passport?.[0]
       ? await uploadOnCloudinary(req.files?.passport?.[0]?.path)
@@ -112,7 +122,8 @@ export const ApplyAsconsultant = asyncHandler(async (req, res) => {
     languageProficiency: parse(languages),
     certificates: certifications,
     acceptedTerms: termsAccepted === "true" || termsAccepted === true,
-    visibleOnPlatform: profileVisibility === "true" || profileVisibility === true,
+    visibleOnPlatform:
+      profileVisibility === "true" || profileVisibility === true,
     education: parse(education),
     graduationYear,
     highestQualification,
@@ -128,15 +139,22 @@ export const ApplyAsconsultant = asyncHandler(async (req, res) => {
     isApproved: false,
   });
 
-  const savedConsultant = await Consultant.findById(consultant._id).select("-password -refreshToken");
+  const savedConsultant = await Consultant.findById(consultant._id).select(
+    "-password -refreshToken"
+  );
   if (!savedConsultant) throw new ApiError(404, "Consultant not created");
 
-  return res.status(200).json(
-    new ApiResponse(200, savedConsultant, "success", "Consultant created successfully")
-  );
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        savedConsultant,
+        "success",
+        "Consultant created successfully"
+      )
+    );
 });
-
-
 
 //login consultant only if approved
 export const loginAsConsultant = asyncHandler(async (req, res) => {
@@ -178,5 +196,26 @@ export const loginAsConsultant = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, loggedinConsultant));
+    .json(new ApiResponse(200 , {
+       ...loggedinConsultant.toObject(), // keep structure same
+      accessToken,
+    }));
+});
+
+// comsultant edit profile
+
+export const consultanteditProfile = asyncHandler(async (req, res) => {
+  const consultant = req.consultant;
+
+    const protectedFields = ["_id", "status", "password", "refreshToken", "role"];
+
+    Object.entries(req.body).forEach(([key, value]) => {
+      if (!protectedFields.includes(key) && consultant[key] !== undefined) {
+        consultant[key] = value;
+      }
+    });
+
+    await consultant.save();
+
+    return res.status(200).json(new ApiResponse(200, consultant));
 });
