@@ -1,9 +1,20 @@
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 
 export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleAsk = () => {
+    if (searchQuery.trim()) {
+      navigate(`/chatbot?query=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") handleAsk();
+  };
 
   return (
     <section
@@ -20,27 +31,34 @@ export default function Hero() {
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-teal-900 mb-4 sm:mb-5 md:mb-6 leading-tight max-w-2xl mx-auto lg:mx-0">
               Fly Higher with the Right Advice
             </h1>
-            
+
             {/* Subtitle - Responsive text and spacing */}
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 mb-6 sm:mb-7 md:mb-8 max-w-md sm:max-w-lg mx-auto lg:mx-0 px-2 sm:px-0">
               Get expert guidance across a range of fields.
             </p>
-            
+
             {/* Search Input - Fully responsive */}
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto lg:mx-0">
-               <a href="/ViewAllConsultants">
               <input
                 type="text"
                 placeholder="What can we assist you with?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyPress} // 🆕 detect Enter
                 className="w-full px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
               />
-           
-                <button className="absolute right-1.5 sm:right-2 top-1/2 transform -translate-y-1/2 bg-green-800 text-white p-1.5 sm:p-2 rounded-full hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+              <button
+                onClick={handleAsk} // 🆕 Ask button handler
+                className="absolute right-1.5 sm:right-2 top-1/2 transform -translate-y-1/2 bg-green-800 text-white p-1.5 sm:p-2 rounded-full hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              >
                 <Search size={16} className="sm:w-5 sm:h-5" />
               </button>
-            </a>
+              <button
+        onClick={() => navigate("/consultant-quiz")}
+        className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg"
+      >
+        🤔 Not sure who to consult? Let us guide you!
+      </button>
             </div>
           </div>
 
