@@ -47,6 +47,10 @@ const consultantSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    profileHealth: {
+      type: Number,
+      default: 100,
+    },
 
     // category
 
