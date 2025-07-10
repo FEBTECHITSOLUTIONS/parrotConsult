@@ -53,12 +53,14 @@ export default function Hero() {
               >
                 <Search size={16} className="sm:w-5 sm:h-5" />
               </button>
+            </div>
+            <div className="flex w-20px mx-auto items-center mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 2xl:mt-9">
               <button
-        onClick={() => navigate("/consultant-quiz")}
-        className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg"
-      >
-        🤔 Not sure who to consult? Let us guide you!
-      </button>
+                onClick={() => navigate("/consultant-quiz")}
+                className="bg-green-600 hover:bg-green-700 text-white px-2 py-3 rounded-lg text-lg"
+              >
+                🤔 Not sure who to consult? Let us guide you!
+              </button>
             </div>
           </div>
 
