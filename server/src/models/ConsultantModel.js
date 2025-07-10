@@ -52,6 +52,19 @@ const consultantSchema = new mongoose.Schema(
       default: 100,
     },
 
+    bookingMissedCount: {
+      type: Number,
+      default: 0,
+      maxcount: 3,
+    },
+
+    reschedulemeeting: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+      default: null,
+      maxcount: 1,
+    },
+
     // category
 
     primaryCategory: String,
@@ -72,19 +85,16 @@ const consultantSchema = new mongoose.Schema(
     hourlyRate: Number,
     // bookingLeadTime: String,
 
-weeklyAvailability: {
-  type: Map,
-  of: [
-    {
-      start: { type: String },
-      end: { type: String },
-    }
-  ],
-  default: {},
-},
-
-
-
+    weeklyAvailability: {
+      type: Map,
+      of: [
+        {
+          start: { type: String },
+          end: { type: String },
+        },
+      ],
+      default: {},
+    },
 
     // Agreements
     acceptedTerms: { type: Boolean, default: false },
