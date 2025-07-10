@@ -23,6 +23,8 @@ import MeetingRoom from '../videoroom/meeting';
 import ConsultantApplicationForm from '../forms/ConsultantApplicationform';
 import ConsultantSignupForm from '../forms/ConsultantSignupForm';
 import AuthModal from '../forms/AuthModal';
+import ChatBot from '../pages/chatbot';
+import ConsultantQuiz from '../forms/recomendform';
 
 const routes = createBrowserRouter([
   {
@@ -40,6 +42,8 @@ const routes = createBrowserRouter([
       { path: 'application-form', element: <ConsultantApplicationForm /> },
       { path: 'ViewAllConsultants', element: <ViewAllConsultants /> },
       { path: 'AuthModal', element: <AuthModal /> },
+      { path: 'chatbot', element: <ChatBot /> },
+      { path: 'consultant-quiz', element: <ConsultantQuiz /> },
     ]
   },
   {

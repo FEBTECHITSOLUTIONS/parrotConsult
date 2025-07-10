@@ -44,10 +44,19 @@ const DashboardOverview = ({ consultants, bookings }) => {
     })),
   ];
 
+  const rejectedCount = consultants.filter(
+    (c) => c.status === "rejected"
+  ).length;
+  const pendingCount = consultants.filter(
+    (c) => c.status === "pending"
+  ).length;
+
   // Sort activities by latest time
   const sortedActivity = combinedActivity.sort(
     (a, b) => new Date(b.time) - new Date(a.time)
   );
+
+  console.log("hello", consultants);
 
   if (!consultants || !bookings) {
     return (
@@ -63,7 +72,7 @@ const DashboardOverview = ({ consultants, bookings }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <WarmStatsCard
           title="Pending Applications"
-          value={consultants?.length || 0}
+          value={pendingCount}
           icon={Users}
           color="yellow"
           trend="+12%"
@@ -86,8 +95,8 @@ const DashboardOverview = ({ consultants, bookings }) => {
           description="Success rate: 85%"
         />
         <WarmStatsCard
-          title="Rejected This Week"
-          value="8"
+          title="Rejected Consultants"
+          value={rejectedCount}
           icon={XCircle}
           color="red"
           trend="-5%"

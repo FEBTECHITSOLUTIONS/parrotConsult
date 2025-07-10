@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { upload } from "../middlewares/multer.js";
-import { ApplyAsconsultant, loginAsConsultant } from "../controllers/Consultant.controller.js";
+import { ApplyAsconsultant, consultanteditProfile, loginAsConsultant } from "../controllers/Consultant.controller.js";
+import { verifyConsultant } from "../middlewares/consultantMiddleware.js";
 
 const ConsultantRouter = Router();
 
@@ -16,6 +17,13 @@ ConsultantRouter.route("/registerasconsultant").post(
 );
 
 
+
+ConsultantRouter.route("/updateProfile").put(verifyConsultant , upload.single("profilePicture"), consultanteditProfile );
+
 ConsultantRouter.route("/loginconsultant").post(loginAsConsultant);
 
 export default ConsultantRouter;
+
+
+
+
